@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import Button from "./Button"
 import Form from "./Form"
 import Illustration from "./Illustration"
@@ -24,10 +25,12 @@ const Login = () => {
                         placeholder="Enter Currect Password" icon="lock"
                     />
 
-                    <Button className="btn btn-success w-100 mt-3">Submit Now</Button>
+                    <Button className="btn btn-success w-100 mt-3">
+                        <span className="text-white">Submit Now</span>
+                    </Button>
 
                     <div className="mt-3 text-center">
-                        Don't have an account? <a href="">Signup</a> instead.
+                        Don't have an account? <Link to="/signup">Signup</Link> instead.
                     </div>
                 </Form>
             </div>

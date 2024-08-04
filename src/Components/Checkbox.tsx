@@ -1,10 +1,10 @@
 import React from "react"
 
-type Props = { text:string} &React.InputHTMLAttributes<HTMLInputElement>
+type Props = { className:string, text:string} &React.InputHTMLAttributes<HTMLInputElement>
 
-const Checkbox = ({text, ...rest}: Props) => {
+const Checkbox = ({className, text, ...rest}: Props) => {
   return (
-    <label>
+    <label className={className}>
         <input type="checkbox" {...rest} />{text}
     </label>
   )
