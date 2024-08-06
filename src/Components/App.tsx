@@ -7,11 +7,13 @@ import Login from './Login';
 import Quiz from './Quiz';
 import Result from './Result';
 import Signup from './Signup';
+import { AuthProvider } from '../Contexts/AuthContext';
 
 
 const App: React.FC = () => {
   return (
     <Router>
+      <AuthProvider>
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -21,6 +23,7 @@ const App: React.FC = () => {
           <Route path="/result" element={<Result />} />
         </Routes>
       </Layout>
+      </AuthProvider>
     </Router>
   );
 }
