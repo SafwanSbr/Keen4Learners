@@ -1,12 +1,12 @@
 import React from 'react'
 
-type Props = { children:React.ReactNode, className:string}
+type Props = { children:React.ReactNode, className:string} & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-const Button = ({children, className}: Props) => {
+const Button = ({children, className, ...rest}: Props) => {
   return (
-    <div className={className}>
-        <span>{children}</span>
-    </div>
+    <button className={className} {...rest}>
+        {children}
+    </button>
   )
 }
 

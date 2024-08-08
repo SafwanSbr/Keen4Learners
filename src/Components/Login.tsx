@@ -1,8 +1,5 @@
-import { Link } from "react-router-dom"
-import Button from "./Button"
-import Form from "./Form"
 import Illustration from "./Illustration"
-import TextInput from "./TextInput"
+import LoginForm from "./LoginForm"
 
 const Login = () => {
   return (
@@ -13,26 +10,7 @@ const Login = () => {
                 <Illustration/>
             </div>
             <div className="col-md-6" style={{ height: '330px' }}>
-                <Form className="">
-                    <TextInput 
-                        type="text" 
-                        placeholder="Enter Email" 
-                        icon="email"
-                    />
-
-                    <TextInput 
-                        type="password"
-                        placeholder="Enter Currect Password" icon="lock"
-                    />
-
-                    <Button className="btn btn-success w-100 mt-3">
-                        <span className="text-white">Submit Now</span>
-                    </Button>
-
-                    <div className="mt-3 text-center">
-                        Don't have an account? <Link to="/signup">Signup</Link> instead.
-                    </div>
-                </Form>
+                <LoginForm/>
             </div>
         </div>
     </div>

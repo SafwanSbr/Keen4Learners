@@ -1,67 +1,71 @@
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile, User, UserCredential } from "firebase/auth";
-import React, { useEffect, useState } from "react";
-import { useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "../firebase";
 
+// Type definition for AuthContext
 type AuthContextType = {
-    currentUser: User|null;
-    signup: (email:string, password:string, username:string) => void;
-    login: (email:string, password:string) => Promise<UserCredential>;
+    currentUser: User | null;
+    signup: (email: string, password: string, username: string) => Promise<void>;
+    login: (email: string, password: string) => Promise<UserCredential>;
     logout: () => Promise<void>;
-}
+};
 
-const AuthContext = React.createContext<AuthContextType|undefined>(undefined);
+const AuthContext = React.createContext<AuthContextType | undefined>(undefined);
 
-//A custom Hook
+// A custom Hook
 // eslint-disable-next-line react-refresh/only-export-components
-export const useAuth = ()=>{
+export const useAuth = () => {
     const context = useContext(AuthContext);
-    if(!context) throw new Error("useAuth must be used within an AuthProvider");
-
+    if (!context) throw new Error("useAuth must be used within an AuthProvider");
     return context;
 };
 
-type Props = { children: React.ReactNode};
+type Props = { children: React.ReactNode };
 
-export const AuthProvider = ({children}: Props) =>{
+export const AuthProvider = ({ children }: Props) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [currentUser, setCurrentUser] = useState<User | null>(null);
 
-    useEffect(()=>{
+    useEffect(() => {
         const auth = getAuth();
-        const unsubscribe = onAuthStateChanged(auth, (user)=>{ //When user Signup, Firebase will auto signin the user, at that time this function will be fired into Firebase
+        const unsubscribe = onAuthStateChanged(auth, (user) => { // When user signs up, Firebase auto-signs in the user and this function is triggered.
             setCurrentUser(user);
             setLoading(false);
-        })
+        });
 
-        return unsubscribe; // Cleanup subscription on unmount & to prevent auto update function address
+        return unsubscribe; // Cleanup subscription on unmount
     }, []);
 
-    //Signup 
-    const signup = async (email: string, password: string, username: string) => {
+    // Signup 
+    const signup = async (email: string, password: string, username: string): Promise<void> => {
         const auth = getAuth();
-        await createUserWithEmailAndPassword(auth, email, password); // Create Account
-    
-        const user = auth.currentUser; // Get user
-        if (user) {
-          // Update Profile
-          await updateProfile(user, { displayName: username });
-          setCurrentUser({ ...user }); // Set updated user
+        try {
+            await createUserWithEmailAndPassword(auth, email, password); // Create Account
+            const user = auth.currentUser; // Get user
+            if (user) {
+                // Update Profile
+                await updateProfile(user, { displayName: username });
+                setCurrentUser({ ...user }); // Set updated user
+            } else {
+                throw new Error("Failed to get the current user after signup.");
+            }
+        } catch (error) {
+            console.error("Error during signup:", error); // Log error to console
+            throw error; // Rethrow error so that the calling function knows something went wrong
         }
-        else throw new Error("Error occured to get Auth from Firebase");
     };
 
     // Login Function
-    const login = (email: string, password: string): Promise<UserCredential> => {
+    const login = async (email: string, password: string): Promise<UserCredential> => {
         const auth = getAuth();
         return signInWithEmailAndPassword(auth, email, password);
     };
 
     // Logout
-    const logout= () =>{
+    const logout = () => {
         const auth = getAuth();
         return signOut(auth);
-    }
+    };
 
     const value: AuthContextType = {
         currentUser, signup, login, logout
@@ -72,4 +76,4 @@ export const AuthProvider = ({children}: Props) =>{
             {!loading && children} {/* Render children only when loading is false */}
         </AuthContext.Provider>
     );
-}
+};
