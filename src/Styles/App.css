@@ -1,13 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url("https://fonts.googleapis.com/css2?family=Material+Icons+Outlined");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
 
 :root {
-  --bodyBackground: #f2f4f8;
-  --successGreen: #00ff84;
-  --dangerRed: #ffc0c7;
-  --questionBG: #e4e8ee;
-  --fontPrimary: #002333;
-  --active: #2dbf64;
+  /* Modern Color Palette - Updated from original */
+  --bodyBackground: #f8fafc;
+  --successGreen: #10b981;
+  --dangerRed: #ef4444;
+  --questionBG: #f1f5f9;
+  --fontPrimary: #0f172a;
+  --active: #10b981;
+  
+  /* New color variables */
+  --primary: #2563eb;
+  --primary-dark: #1e40af;
+  --secondary: #10b981;
+  --accent: #8b5cf6;
+  --text-secondary: #64748b;
+  --border: #e2e8f0;
 }
 
 * {
@@ -20,17 +33,23 @@
 
 body {
   background-color: var(--bodyBackground);
+  color: var(--fontPrimary);
 }
 
 a {
   text-decoration: none;
-  color: blue;
+  color: var(--primary);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--primary-dark);
 }
 
 h4 {
-  color: #7c83a7;
+  color: var(--text-secondary);
   font-weight: 600;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid var(--border);
   padding: 10px 0;
   margin-bottom: 10px;
 }
@@ -38,15 +57,26 @@ h4 {
 .info {
   margin-top: 1rem;
   text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.info a {
+  font-weight: 500;
+  color: var(--primary);
 }
 
 .error {
-  background-color: var(--dangerRed);
-  padding: 0.6rem 1.2rem;
-  margin-top: 10px;
-  border-radius: 8px;
+  background-color: #fee2e2;
+  color: #991b1b;
+  padding: 0.75rem 1rem;
+  margin-top: 0.75rem;
+  border-radius: 0.5rem;
   display: flex;
   align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  border: 1px solid #fecaca;
 }
 
 .column {

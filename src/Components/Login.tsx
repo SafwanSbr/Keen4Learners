@@ -3,16 +3,28 @@ import LoginForm from "./LoginForm"
 
 const Login = () => {
   return (
-    <div className="container my-5">
-        <h1 className="text-center mb-4">Login to your Account</h1>
-        <div className="row justify-content-center">
-            <div className="col-md-6 d-none d-md-block">
-                <Illustration/>
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
+      <div className="max-w-6xl mx-auto">
+        {/* Responsive heading */}
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 text-text-primary">
+          Login to your Account
+        </h1>
+
+        {/* Responsive grid layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center">
+          {/* Illustration - hidden on mobile, visible on large screens */}
+          <div className="hidden lg:flex lg:justify-center lg:items-center">
+            <Illustration/>
+          </div>
+          
+          {/* Form container with responsive padding */}
+          <div className="w-full">
+            <div className="bg-background-surface rounded-xl shadow-medium p-6 sm:p-8 lg:p-10">
+              <LoginForm/>
             </div>
-            <div className="col-md-6" style={{ height: '330px' }}>
-                <LoginForm/>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
   )
 }

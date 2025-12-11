@@ -37,10 +37,10 @@ const SignupForm = () => {
         }
     }
     return (
-        <Form className={""} onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
             <TextInput 
                 type="text"
-                placeholder="Enter Your Username"  
+                placeholder="Enter your username"  
                 icon="person"
                 value={username}
                 required
@@ -49,7 +49,7 @@ const SignupForm = () => {
             
             <TextInput 
                 type="email"
-                placeholder="Enter Valid Email"  
+                placeholder="Enter your email"  
                 icon="alternate_email"
                 value={email}
                 required
@@ -58,7 +58,7 @@ const SignupForm = () => {
 
             <TextInput 
                 type="password"
-                placeholder="Enter A strong Password"  
+                placeholder="Create a strong password"  
                 icon="lock"
                 value={password}
                 required
@@ -67,7 +67,7 @@ const SignupForm = () => {
 
             <TextInput 
                 type="password"
-                placeholder="Enter Same Password Again"  
+                placeholder="Confirm your password"  
                 icon="lock_clock"
                 value={confirmPassword}
                 required
@@ -78,16 +78,16 @@ const SignupForm = () => {
                 required
                 text="I agree to the Terms &amp; Conditions"
                 value={agree}
-                onChange={(e) => setAgree(e.target.value)} className={""}            
+                onChange={(e) => setAgree(e.target.value)}
             />
 
-            <Button disabled={loading} type="submit" className={""}>
-                <span>Submit Now</span>
+            <Button disabled={loading} type="submit">
+                <span>{loading ? "Creating account..." : "Create Account"}</span>
             </Button>
 
             {error && <p className="error">{error}</p>}
             <div className="info">
-                Already have an Account? <Link to="/login">Login</Link> instead.
+                Already have an account? <Link to="/login" className="font-semibold hover:underline">Sign in</Link> instead.
             </div>
         </Form>
     );

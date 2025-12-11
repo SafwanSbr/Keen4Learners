@@ -7,8 +7,9 @@ const Layout = ({children}: Props) => {
   return (
     <>
     <Nav/>
-    <main className="w-100 py-4">
-        <div className="container my-2">
+    {/* Responsive padding-top for fixed navbar: pt-20 on mobile, pt-24 on larger screens */}
+    <main className="w-full min-h-screen bg-background py-4 sm:py-6 lg:py-8 pt-20 sm:pt-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {children}
         </div>
     </main>

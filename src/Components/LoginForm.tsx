@@ -33,18 +33,32 @@ const LoginForm = () => {
     }
 
     return (
-        <Form className={""} onSubmit={handleSubmit}>
-            <TextInput type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Valid Email" required icon={"alternate_email"} />
+        <Form onSubmit={handleSubmit}>
+            <TextInput 
+                type="email" 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+                placeholder="Enter your email" 
+                required 
+                icon={"alternate_email"} 
+            />
 
-            <TextInput type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter Valid Password" required icon={"lock"} />
+            <TextInput 
+                type="password" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+                placeholder="Enter your password" 
+                required 
+                icon={"lock"} 
+            />
 
-            <Button className="" type="submit" disabled={loading}>
-                <span>Submit Now</span>
+            <Button type="submit" disabled={loading}>
+                <span>{loading ? "Signing in..." : "Sign In"}</span>
             </Button>
             
             {error && <p className="error">{error}</p>}
             <div className="info">
-                Don't have an account? <Link to="/signup">Signup</Link> instead.
+                Don't have an account? <Link to="/signup" className="font-semibold hover:underline">Sign up</Link> instead.
             </div>
         </Form>
     )

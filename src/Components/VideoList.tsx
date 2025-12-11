@@ -10,17 +10,23 @@ export default function Videos() {
   const { loading, error, videos, hasMore } = useVideoList(page);
 
   return (
-    <div>
+    <div className="w-full">
       {videos.length > 0 && (
       <InfiniteScroll
         dataLength={videos.length}
         hasMore={hasMore}
         next={() => setPage(page + 1)} // Increment by 1 for next page
-        loader={<div>Loading more videos...</div>} // Added loader prop
+        loader={
+          <div className="flex justify-center items-center py-8">
+            <div className="text-text-secondary">Loading more videos...</div>
+          </div>
+        } // Added loader prop
       >
+        {/* Responsive grid: 1 column on mobile, 2 on tablet, 3+ on desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
           {videos.map((video: getVideos, index: number) =>
             video.noq > 0 ? (
-              <Link to={`/quiz/${video.youtubeID}`} key={index}>
+              <Link to={`/quiz/${video.youtubeID}`} key={index} className="block">
                 <Video
                   title={video.title}
                   id={video.youtubeID}
@@ -36,11 +42,24 @@ export default function Videos() {
               />
             )
           )}
+        </div>
         </InfiniteScroll>
       )}
-      {!loading && videos.length === 0 && <div>No data found!</div>}
-      {error && <div>There was an error!</div>}
-      {loading && <div>Loading...</div>}
+      {!loading && videos.length === 0 && (
+        <div className="text-center py-12 sm:py-16">
+          <div className="text-text-secondary text-lg sm:text-xl">No videos found</div>
+        </div>
+      )}
+      {error && (
+        <div className="text-center py-12 sm:py-16">
+          <div className="text-error text-lg sm:text-xl">There was an error loading videos</div>
+        </div>
+      )}
+      {loading && videos.length === 0 && (
+        <div className="flex justify-center items-center py-12 sm:py-16">
+          <div className="text-text-secondary text-lg sm:text-xl">Loading...</div>
+        </div>
+      )}
     </div>
   );
 }
