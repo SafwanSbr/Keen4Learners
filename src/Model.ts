@@ -6,7 +6,7 @@ export type getVideos = {
 
 export type OptionDTO = {
     checked: boolean;
-    text: string;
+    title: string;
 };
   
 export  type QuestionDTO = {

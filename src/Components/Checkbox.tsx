@@ -3,9 +3,10 @@ import React from "react"
 type Props = { className?:string, text:string} &React.InputHTMLAttributes<HTMLInputElement>
 
 const Checkbox = ({className = "", text, ...rest}: Props) => {
+  console.log(text);
   return (
     <label className={`flex items-center gap-3 cursor-pointer group ${className}`}>
-      <div className="relative flex items-center justify-center">
+      <div className="relative flex items-center justify-center flex-shrink-0">
         <input 
           type="checkbox" 
           className="sr-only peer" 
@@ -22,7 +23,7 @@ const Checkbox = ({className = "", text, ...rest}: Props) => {
           </svg>
         </div>
       </div>
-      <span className="text-sm text-text-primary select-none">{text}</span>
+      <span className="text-base font-medium text-gray-900 select-none flex-1">{text}</span>
     </label>
   )
 }

@@ -62,13 +62,13 @@ const Quiz = () => {
   }
 
   const nextQuestion = () =>{
-    if( currentQuestion+1 < questions.length){
+    if(qna && currentQuestion + 1 < qna.length){
       setCurrentQuestion((prevCurrent)=> prevCurrent+1);
     }
   }
 
   const prevQuestion = ()=>{
-    if (currentQuestion >= 1 && currentQuestion <= questions.length){
+    if(qna && currentQuestion >= 1 && currentQuestion < qna.length){
       setCurrentQuestion((prevCurrent) => prevCurrent - 1);
     }
   }
@@ -90,30 +90,97 @@ const Quiz = () => {
   // Calculate percentage of progress
   const percentage = qna && qna.length > 0 ? ((currentQuestion + 1) / qna.length) * 100 : 0;
 
+  // Defensive check: ensure current question exists and has options
+  const currentQuestionData = qna && qna.length > 0 && currentQuestion < qna.length 
+    ? qna[currentQuestion] 
+    : null;
+  const questionOptions = currentQuestionData?.options 
+    ? currentQuestionData.options.map(option => ({
+        title: option.title, 
+        checked: option.checked || false
+      }))
+    : [];
+
   return (
-    <>
-      {loading && <div>Loading ...</div>}
-      {error && <div>There was an error!</div>}
-      {!loading && !error && qna && qna.length > 0 && (
-        <>
-          <h1>{qna[currentQuestion].title}</h1>
-          <h4>Question can have multiple answers</h4>
-          <Answers
-            options={qna[currentQuestion].options.map(option =>({
-              title:option.text, checked:option.checked
-            }))}
-            handleChange={handleAnswer}
-          />
-          <ProgressBar
-            next={nextQuestion}
-            prev={prevQuestion}
-            submit={submitHandle}
-            progress={percentage}
-          />
-          <MiniPlayer />
-        </>
-      )}
-    </>
+    <div className="min-h-screen bg-background py-8 px-4">
+      <div className="max-w-4xl mx-auto">
+        {/* Loading State */}
+        {loading && (
+          <div className="flex flex-col items-center justify-center min-h-[400px]">
+            <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
+            <p className="text-text-secondary font-medium">Loading questions...</p>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="bg-error-light border border-error rounded-lg p-6 text-center">
+            <div className="text-error text-2xl mb-2">⚠️</div>
+            <h2 className="text-error font-semibold text-lg mb-2">Error Loading Quiz</h2>
+            <p className="text-text-secondary">There was an error loading the questions. Please try again later.</p>
+          </div>
+        )}
+
+        {/* Quiz Content */}
+        {!loading && !error && currentQuestionData && (
+          <div className="space-y-6">
+            {/* Question Header */}
+            <div className="bg-background-surface rounded-xl shadow-lg border border-border-light p-6 md:p-8">
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="px-3 py-1 bg-primary/10 text-primary text-sm font-semibold rounded-full">
+                      Question {currentQuestion + 1} of {qna?.length || 0}
+                    </span>
+                  </div>
+                  <h1 className="text-2xl md:text-3xl font-bold text-text-primary leading-tight">
+                    {currentQuestionData.title}
+                  </h1>
+                </div>
+              </div>
+              
+              <div className="mt-4 pt-4 border-t border-border">
+                <p className="text-sm text-text-secondary flex items-center gap-2">
+                  <span className="material-icons-outlined text-base">info</span>
+                  <span>You can select multiple answers for this question</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Answers Section */}
+            <div className="bg-background-surface rounded-xl shadow-lg border border-border-light p-6 md:p-8">
+              <h2 className="text-lg font-semibold text-text-primary mb-4">Select your answer(s):</h2>
+              <Answers
+                options={questionOptions}
+                handleChange={handleAnswer}
+              />
+            </div>
+
+            {/* Progress Bar */}
+            <ProgressBar
+              next={nextQuestion}
+              prev={prevQuestion}
+              submit={submitHandle}
+              progress={percentage}
+            />
+
+            {/* Mini Player */}
+            <div className="mt-6">
+              <MiniPlayer />
+            </div>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && !error && (!qna || qna.length === 0) && (
+          <div className="bg-background-surface rounded-xl shadow-lg border border-border-light p-8 text-center">
+            <div className="text-4xl mb-4">📝</div>
+            <h2 className="text-xl font-semibold text-text-primary mb-2">No Questions Available</h2>
+            <p className="text-text-secondary">There are no questions for this quiz yet.</p>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 

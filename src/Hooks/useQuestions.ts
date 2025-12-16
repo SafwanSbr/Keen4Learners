@@ -17,11 +17,13 @@ export const useQuestions = (videoID:string)=>{
                 setError(false);
                 setLoading(true);
                 const snapshot = await get(quizQuery);
+                console.log("Fetched questions:", snapshot.val());
                 setLoading(false);
 
                 if(snapshot.exists()) {
+                    const fetchedQuestions = Object.values(snapshot.val()) as QuestionDTO[];
                     setQuestions((prevQuestions) => {
-                        return [...prevQuestions, ...Object.values(snapshot.val()) as []];
+                        return [...prevQuestions, ...fetchedQuestions];
                     });
                 }
             } catch (error) {

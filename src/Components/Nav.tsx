@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import logo from '../Assets/logo.png'
 import Account from './Account';
 
-
 const Nav = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 bg-background-surface border-b border-border shadow-soft z-50 backdrop-blur-sm bg-opacity-95">
