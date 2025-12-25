@@ -7,11 +7,10 @@ type AnalysisProps = {
 
 const Analysis = ({ answers }: AnalysisProps) => {
   return (
-    <div className="analysis">
-      <h1 className="text-2xl font-bold text-text-primary mb-4">Question Analysis</h1>
-      <h4 className="text-lg text-text-secondary mb-6">
-        You answered {answers.length} {answers.length === 1 ? "question" : "questions"}
-      </h4>
+    <div className="analysis bg-background-surface rounded-xl shadow-lg border border-border-light p-6 md:p-8 mt-6">
+      <h1 className="text-2xl md:text-3xl font-bold text-text-primary mb-4">
+        Question Analysis
+      </h1>
       <Question answers={answers} />
     </div>
   );

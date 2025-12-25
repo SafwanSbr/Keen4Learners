@@ -28,7 +28,7 @@ export default function Answers({
   }
 
   return (
-    <div className="answers space-y-3">
+    <div className="answers space-y-2">
       {options.map((option, index) => (
         <Fragment key={index}>
           {input ? (
@@ -43,20 +43,30 @@ export default function Answers({
             </div>
           ) : (
             <div
-              className={`p-4 rounded-lg border transition-all duration-200 ${
+              className={`p-4 rounded-lg border-2 transition-all duration-200 ${
                 option.correct
-                  ? "bg-green-50 border-green-300"
+                  ? "bg-green-200 border-green-400"
                   : option.checked
-                  ? "bg-red-50 border-red-300"
+                  ? "bg-red-200 border-red-400"
                   : "bg-background-muted border-border"
               }`}
             >
-              <Checkbox
-                className="answer w-full"
-                text={option.title}
-                defaultChecked={option.checked}
-                disabled
-              />
+              <div
+                className={
+                  option.correct
+                    ? "text-green-900"
+                    : option.checked
+                    ? "text-red-900"
+                    : "text-text-primary"
+                }
+              >
+                <Checkbox
+                  className="answer w-full"
+                  text={option.title}
+                  defaultChecked={option.checked}
+                  disabled
+                />
+              </div>
             </div>
           )}
         </Fragment>
