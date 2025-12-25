@@ -160,9 +160,7 @@ const Quiz = () => {
               progress={percentage}
             />
 
-            <div className="mt-4">
-              <MiniPlayer />
-            </div>
+            <MiniPlayer id={id} />
           </div>
         )}
 
