@@ -23,7 +23,7 @@ const Checkbox = ({className = "", text, ...rest}: Props) => {
           </svg>
         </div>
       </div>
-      <span className="text-base font-medium text-gray-900 select-none flex-1">{text}</span>
+      <span className={`text-base font-medium select-none flex-1 ${rest.disabled ? 'text-current' : 'text-gray-900'}`}>{text}</span>
     </label>
   )
 }
